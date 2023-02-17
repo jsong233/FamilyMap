@@ -30,7 +30,7 @@
             <artifactId>FMSTestingObf</artifactId>
             <scope>system</scope>
             <version>1</version>
-            <systemPath>${basedir}/libs/FMSTestingObf.jar</systemPath>
+            <systemPath>libs/FMSTestingObf.jar</systemPath>
         </dependency>
     </dependencies>
 
