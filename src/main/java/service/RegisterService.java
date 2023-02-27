@@ -3,8 +3,6 @@ package service;
 import model.*;
 import dataaccess.*;
 import request.RegisterRequest;
-import request.LoginRequest;
-import result.LoginResult;
 import result.RegisterResult;
 
 import java.util.UUID;
@@ -62,7 +60,7 @@ public class RegisterService {
                 result = new RegisterResult(authtoken, username, personID, true);
             }
             else {
-                result = new RegisterResult("username already taken", false);
+                result = new RegisterResult("Error: username already taken", false);
             }
 
             // Close database connection, COMMIT transaction

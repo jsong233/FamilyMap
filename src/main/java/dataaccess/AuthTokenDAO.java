@@ -27,6 +27,19 @@ public class AuthTokenDAO {
         }
     }
 
+    public void updateAuthToken(AuthToken authToken) throws DataAccessException {
+        String sql = "UPDATE AuthToken SET authtoken = ? WHERE username = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, authToken.getAuthToken());
+            stmt.setString(2, authToken.getUsername());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DataAccessException("Error encountered while updating an authtoken in the database");
+        }
+    }
+
     /**
      * Find an authToken from the database with the given authtoken.
      * @param authtoken: the authtoken of the authToken to retrieveAuthToken.

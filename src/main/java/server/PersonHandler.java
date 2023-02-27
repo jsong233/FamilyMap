@@ -46,7 +46,7 @@ public class PersonHandler extends Handler {
                         PersonRequest request = new PersonRequest(authToken);
                         // returns family members of the current user determined by the authToken
                         result = service.getPeople(request);
-                        success = true;
+                        success = result.isSuccess();
                     }
                     // if the request URL is /person/personID
                     else if (params.length == 3) {
@@ -54,12 +54,17 @@ public class PersonHandler extends Handler {
                         PersonRequest request = new PersonRequest(authToken, personID);
                         // returns the single Person object with the given ID
                         result = service.getPerson(request);
-                        success = true;
+                        success = result.isSuccess();
                     }
 
                     if (success) {
                         // send the response back
                         exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                    } else {
+                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                    }
+
+                    if (result != null) {
                         OutputStream resBody = exchange.getResponseBody();
                         Gson gson = new Gson();
                         String resData = gson.toJson(result);
@@ -69,12 +74,12 @@ public class PersonHandler extends Handler {
                 }
             }
             if (!success) {
+                System.out.println("not success");
                 // the request method was not GET, or it does not contain an Authorization header
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 // not sending any response body
                 exchange.getResponseBody().close();
             }
-
         }
         catch (DataAccessException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);

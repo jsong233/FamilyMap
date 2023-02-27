@@ -39,28 +39,32 @@ public class LoginHandler extends Handler {
                 if (success) {
                     // send the response back
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-                    OutputStream resBody = exchange.getResponseBody();
-                    String resData = gson.toJson(result);
-                    writeString(resData, resBody);
-                    resBody.close();
+                } else {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 }
+                OutputStream resBody = exchange.getResponseBody();
+                String resData = gson.toJson(result);
+                writeString(resData, resBody);
+                resBody.close();
             }
-
-            if (!success) {
+            else {
                 // The HTTP request was invalid somehow, return a "bad request" status code
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 // not sending any response body
                 exchange.getResponseBody().close();
             }
 
+        } catch (DataAccessException e) {
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
+            exchange.getResponseBody().close();
+
+            e.printStackTrace();
         }
         catch (IOException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
             exchange.getResponseBody().close();
 
             e.printStackTrace();
-        } catch (DataAccessException e) {
-            throw new RuntimeException(e);
         }
     }
 }

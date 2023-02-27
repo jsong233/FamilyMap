@@ -1,9 +1,12 @@
 package service;
 
 import dataaccess.*;
+import model.AuthToken;
 import model.User;
 import request.LoginRequest;
 import result.LoginResult;
+
+import java.util.UUID;
 
 public class LoginService {
 
@@ -31,24 +34,31 @@ public class LoginService {
             if (user != null) {
                 // if the entered password is correct
                 if (user.getPassword().equals(password)) {
-                    String authtoken = aDao.findAuthToken(username);
-                    assert authtoken != null;
+                    // generate a new authtoken every time signed in
+                    String authtoken = UUID.randomUUID().toString();
+                    AuthToken authToken = new AuthToken(authtoken, username);
+
+                    if (aDao.findAuthToken(username) != null) {
+                        // if the user was registered or logged in before
+                        aDao.updateAuthToken(authToken);
+                    } else {
+                        // if this is the first time the user logs in (no authtoken found)
+                        aDao.insertAuthToken(authToken);
+                    }
+
                     // Create and return success Result object
                     result = new LoginResult(authtoken, username, user.getPersonID(), true);
                 }
                 else {
-                    result = new LoginResult("incorrect password", false);
+                    result = new LoginResult("Error: incorrect password", false);
                 }
             }
             else {
-                result = new LoginResult("username not found", false);
+                result = new LoginResult("Error: username not found", false);
             }
 
             // Close database connection, COMMIT transaction
             db.closeConnection(true);
-            if (result == null) {
-                System.out.println("LoginResult result is null!");
-            }
             return result;
         }
         catch (DataAccessException e) {

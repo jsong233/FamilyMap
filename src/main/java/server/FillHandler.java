@@ -56,14 +56,17 @@ public class FillHandler extends Handler {
                 exchange.getResponseBody().close();
             }
 
+        } catch (DataAccessException e) {
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
+            exchange.getResponseBody().close();
+
+            e.printStackTrace();
         }
         catch (IOException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
             exchange.getResponseBody().close();
 
             e.printStackTrace();
-        } catch (DataAccessException e) {
-            throw new RuntimeException(e);
         }
     }
 }

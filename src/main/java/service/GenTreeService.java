@@ -14,6 +14,9 @@ public class GenTreeService {
     private User user;
     private final PersonDAO pDao;
     private final EventDAO eDao;
+
+    private int personCount = 0;
+    private int eventCount = 0;
     private SeedService sd = new SeedService();
 
     public GenTreeService(User user, PersonDAO pDao, EventDAO eDao) {
@@ -63,6 +66,8 @@ public class GenTreeService {
             try {
                 pDao.insertPerson(root);
                 eDao.insertEvents(events);
+                personCount += 1;
+                eventCount += events.size();
             } catch (DataAccessException e) {
                 e.printStackTrace();
             }
@@ -108,6 +113,8 @@ public class GenTreeService {
         try {
             pDao.insertPerson(root);
             eDao.insertEvents(events);
+            personCount += 1;
+            eventCount += events.size();
         } catch (DataAccessException e) {
             e.printStackTrace();
         }
@@ -156,5 +163,13 @@ public class GenTreeService {
     public void clearFamily() throws DataAccessException {
         eDao.clearUserEvents(this.user.getUsername());
         pDao.clearUserPersons(this.user.getUsername());
+    }
+
+    public int getPersonCount() {
+        return personCount;
+    }
+
+    public int getEventCount() {
+        return eventCount;
     }
 }

@@ -41,12 +41,12 @@ public class EventHandler extends Handler {
                     EventService service = new EventService();
                     EventResult result = null;
 
-                    // if the request URL is /person
+                    // if the request URL is /event
                     if (params.length == 2) {
                         EventRequest request = new EventRequest(authToken);
                         // returns all events for all family members of the current user determined by the authToken
                         result = service.getEvents(request);
-                        success = true;
+                        success = result.isSuccess();
                     }
                     // if the request URL is /person/personID
                     else if (params.length == 3) {
@@ -54,12 +54,17 @@ public class EventHandler extends Handler {
                         EventRequest request = new EventRequest(authToken, eventID);
                         // returns the single Event object with the given ID
                         result = service.getEvent(request);
-                        success = true;
+                        success = result.isSuccess();
                     }
 
                     if (success) {
                         // send the response back
                         exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+                    } else {
+                        exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
+                    }
+
+                    if (result != null) {
                         OutputStream resBody = exchange.getResponseBody();
                         Gson gson = new Gson();
                         String resData = gson.toJson(result);

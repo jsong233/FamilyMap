@@ -4,6 +4,7 @@ import dataaccess.*;
 import model.AuthToken;
 import model.Person;
 import request.PersonRequest;
+import result.EventResult;
 import result.PersonResult;
 
 import java.util.List;
@@ -30,19 +31,25 @@ public class PersonService {
 
             // find the user associated with this authtoken
             AuthToken authToken = aDao.retrieveAuthToken(authtoken);
-            String username = authToken.getUsername();
 
-            // find the person associated with this personID
-            Person person = pDao.retrievePerson(personID);
+            if (authToken != null) {
+                String username = authToken.getUsername();
 
-            // if this person is associated with the current user
-            if (person.getAssociatedUsername().equals(username)) {
+                // find the person associated with this personID
+                Person person = pDao.retrievePerson(personID);
 
-                // Returns the single Person object with the specified ID
-                result = new PersonResult(person, true);
-            }
-            else {
-                result = new PersonResult("This person is not associated with the current user.", false);
+                // if this person is associated with the current user
+                if (person.getAssociatedUsername().equals(username)) {
+
+                    // Returns the single Person object with the specified ID
+                    result = new PersonResult(person.getAssociatedUsername(), person.getPersonID(), person.getFirstName(),
+                            person.getLastName(), person.getGender(), person.getFatherID(), person.getMotherID(),
+                            person.getSpouseID(), true);
+                } else {
+                    result = new PersonResult("Error: this person is not associated with the current user.", false);
+                }
+            } else {
+                result = new PersonResult("Error: authtoken not found", false);
             }
 
             // Close database connection, COMMIT transaction
@@ -81,14 +88,19 @@ public class PersonService {
 
             // find the user associated with this authtoken
             AuthToken authToken = aDao.retrieveAuthToken(authtoken);
-            String username = authToken.getUsername();
 
-            // Returns all family members of the current user
-            List<Person> people = pDao.getUserPersons(username);
-            Person[] family = new Person[people.size()];
-            family = people.toArray(family);
+            if (authToken != null) {
+                String username = authToken.getUsername();
 
-            result = new PersonResult(family, true);
+                // Returns all family members of the current user
+                List<Person> people = pDao.getUserPersons(username);
+                Person[] family = new Person[people.size()];
+                family = people.toArray(family);
+
+                result = new PersonResult(family, true);
+            } else {
+                result = new PersonResult("Error: authtoken not found", false);
+            }
 
             // Close database connection, COMMIT transaction
             db.closeConnection(true);

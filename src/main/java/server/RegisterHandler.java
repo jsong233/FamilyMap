@@ -44,16 +44,15 @@ public class RegisterHandler extends Handler {
                 if (success) {
                     // send the response back
                     exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-                    OutputStream resBody = exchange.getResponseBody();
-                    // encode the result (RegisterResult object) to JSON string
-                    // and write it to the OutputStream
-                    String resData = gson.toJson(result);
-                    writeString(resData, resBody);
-                    resBody.close();
+                } else {
+                    exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 }
+                OutputStream resBody = exchange.getResponseBody();
+                String resData = gson.toJson(result);
+                writeString(resData, resBody);
+                resBody.close();
             }
-
-            if (!success) {
+            else {
                 // The HTTP request was invalid somehow, return a "bad request" status code
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 // not sending any response body

@@ -43,11 +43,12 @@ public class FillService {
                 genTree.clearFamily();
                 genTree.generate(generation);
 
-                String message = String.format("Successfully added %d generations of ancestor data to the database.", generation);
+                String message = String.format("Successfully added %d persons and %d events to the database.",
+                        genTree.getPersonCount(), genTree.getEventCount());
                 result = new FillResult(message, true);
             }
             else {
-                result = new FillResult("This user is not registered.", false);
+                result = new FillResult("Error: this user is not registered.", false);
             }
 
             // Close database connection, COMMIT transaction

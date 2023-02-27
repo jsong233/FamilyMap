@@ -37,22 +37,24 @@ public class ClearHandler extends Handler {
 
                 success = true;
             }
-
             if (!success) {
                 // The HTTP request was invalid somehow, return a "bad request" status code
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
                 // not sending any response body
                 exchange.getResponseBody().close();
             }
+        }
+        catch (DataAccessException e) {
+            exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
+            exchange.getResponseBody().close();
 
+            e.printStackTrace();
         }
         catch (IOException e) {
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_SERVER_ERROR, 0);
             exchange.getResponseBody().close();
 
             e.printStackTrace();
-        } catch (DataAccessException e) {
-            throw new RuntimeException(e);
         }
     }
 }
