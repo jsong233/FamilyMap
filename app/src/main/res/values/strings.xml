@@ -1,0 +1,26 @@
+<resources>
+
+    <string name="app_name">Family Map</string>
+
+    <!-- Field Names -->
+    <string name="serverHost">Server Host:</string>
+    <string name="serverPort">Server Port:</string>
+    <string name="username">User Name:</string>
+    <string name="password">Password:</string>
+    <string name="firstName">First Name:</string>
+    <string name="lastName">Last Name:</string>
+    <string name="email">Email:</string>
+    <string name="gender">Gender:</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+
+    <string name="city">City:</string>
+    <string name="state">State:</string>
+
+    <!-- Button Names -->
+    <string name="loginButton">Log in</string>
+    <string name="registerButton">Register</string>
+
+    <!-- MapFragment messages -->
+    <string name="mapMarkerInfo">Click on a marker to see event details</string>
+</resources>

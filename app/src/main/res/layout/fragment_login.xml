@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:stretchColumns="3"
+    tools:context=".MainActivity">
+
+    <TableRow>
+        <TextView
+            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:gravity="end"
+            android:text="@string/serverHost"/>
+        <EditText
+            android:id="@+id/serverHostField"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_span="3"
+            android:hint="serverHost"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:gravity="end"
+            android:text="@string/serverPort"/>
+        <EditText
+            android:id="@+id/serverPortField"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_span="3"
+            android:hint="serverPort"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:gravity="end"
+            android:text="@string/username"/>
+        <EditText
+            android:id="@+id/usernameField"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_span="3"
+            android:hint="username"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:gravity="end"
+            android:text="@string/password"/>
+        <EditText
+            android:id="@+id/passwordField"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_span="3"
+            android:hint="password"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:gravity="end"
+            android:text="@string/firstName"/>
+        <EditText
+            android:id="@+id/firstNameField"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_span="3"
+            android:inputType="textPersonName"
+            android:hint="first name"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:gravity="end"
+            android:text="@string/lastName"/>
+        <EditText
+            android:id="@+id/lastNameField"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_span="3"
+            android:inputType="textPersonName"
+            android:hint="last name"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:gravity="end"
+            android:text="@string/email"/>
+        <EditText
+            android:id="@+id/emailField"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_span="3"
+            android:inputType="textEmailAddress"
+            android:hint="email address"/>
+    </TableRow>
+
+    <TableRow>
+        <TextView
+            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:gravity="end|center_vertical"
+            android:text="@string/gender"/>
+
+        <RadioGroup
+            android:id="@+id/genderField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton android:id="@+id/femaleField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/female"/>
+            <RadioButton android:id="@+id/maleField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/male"/>
+        </RadioGroup>
+    </TableRow>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button android:id="@+id/loginButton"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="20dp"
+            android:text="@string/loginButton"
+            android:layout_weight="1"/>
+
+        <Button android:id="@+id/registerButton"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="@string/registerButton"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+</TableLayout>
